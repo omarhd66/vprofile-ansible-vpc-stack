@@ -1,3 +1,7 @@
+#this playbook create a VPC with 2 subnest, 2 route tables, 1 internet gatway, 
+#one nat gatway and one elastiqueIP
+#based on the template defined in vars/vpc_setup
+
 - hosts: localhost
   connection: local
   gather_facts: False
@@ -131,4 +135,33 @@
     - name: Create variables file for vpc output
       copy:
          content: "region: {{ region }}\nvpcid: {{ vpcout.vpc.id }}\npubsub1id: {{ pubsub1_out.subnet.id }}\npubsub2id: {{ pubsub2_out.subnet.id }}\nprivsub1id: {{ privsub1_out.subnet.id }}\nprivsub2id: {{ privsub2_out.subnet.id }}\nigwid: {{ igw_out.gateway_id }}\npubRTid: {{ pubRT_out.route_table.id }}\nNATGWid: {{ NATGW_out.nat_gateway_id }}\nprivRTid: {{ privRT_out.route_table.id }}\n"
-         dest: vars/vpc-output_vars
+         dest: vars/vpc_vars_generated_during_vpc_setup
+
+
+
+# vpc_name: "Vprofile-vpc"
+
+# # VPC Range
+# vpcCidr: '172.20.0.0/16'
+
+# # Subnets Range
+# PubSub1Cidr: 172.20.1.0/24
+# PubSub2Cidr: 172.20.2.0/24
+
+# PrivSub1Cidr: 172.20.4.0/24
+# PrivSub2Cidr: 172.20.5.0/24
+
+
+# # Region Name
+# region: "us-east-1"
+
+# # Zone Names
+# zone1: us-east-1a
+# zone2: us-east-1e
+
+
+# state: present
+
+# # Bastion Vars
+# bastion_ami: ami-00c6177f250e07ec1
+# MYIP: 197.253.210.205/32

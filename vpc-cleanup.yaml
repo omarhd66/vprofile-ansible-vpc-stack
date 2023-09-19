@@ -1,3 +1,11 @@
+# this playbook cleanup the VPC created by vpc-setup.yaml file
+#vps-setup.yaml file create vars/vpc_vars_generated_during_vpc_setup which is used by this play
+#the cleanup has to be done fellow the below order:
+  #- cleanup nat gatway ans EIP
+  #- cleanup subnets
+  #- cleanup route tables
+  #- cleanuo vpc
+  
 - hosts: localhost
   connection: local
   gather_facts: False
@@ -5,7 +13,7 @@
     - name: Import VPC Variables
       include_vars: vars/vpc_setup
     - name: Import VPC Variables
-      include_vars: vars/vpc-output_vars
+      include_vars: vars/vpc_vars_generated_during_vpc_setup
 
     - name: Delete nat gateway
       ec2_vpc_nat_gateway:

@@ -1,0 +1,38 @@
+---
+- name: Setup Vprofile Bastion Host
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Import VPC setup Variable
+      include_vars: vars/vpc_setup
+
+    - name: Import VPC setup Variable
+      include_vars: vars/vpc_vars_generated_during_vpc_setup
+
+    - name: Create vprofile ec2 key
+      ec2_key:
+        name: vprofile-key
+        region: "{{region}}"
+        state: absent
+      register: key_out
+
+    - name: Create Sec Grp for bastion host
+      ec2_group:
+        state: absent
+        name: Bastion-host-sg
+        group_id: "{{BastionSGid}}"
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+
+
+    - name: Terminating Bastion Host
+      ec2:
+        state: absent
+        instance_ids: "{{bastion_instance_id}}"
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        vpc_subnet_id: "{{pubsub1id}}"
+      register: bastionHost_out
+~                               

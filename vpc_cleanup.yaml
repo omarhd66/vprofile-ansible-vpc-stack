@@ -67,7 +67,7 @@
       register: vpcout
 
 
-
+#vars/vpc_vars_generated_during_vpc_setup
 # region: us-east-1
 # vpcid: vpc-05de7c5d0d740b905
 # pubsub1id: subnet-05572f9ee91a55306
